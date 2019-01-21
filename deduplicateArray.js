@@ -1,3 +1,6 @@
+// A quick benchmark of some solutions to deduplicate an array
+// see https://medium.com/@miguel.albrecht/performance-of-javascript-array-ops-2690aed47a50
+// by Miguel Albrecht (zapalote.com)
 let iter = 1000000;
 let strings = ['Paris','New York','Paris','Berlin','Mumbai','San Diego','Berlin'];
 let ar = [];
