@@ -5,9 +5,10 @@ See [this article](https://medium.com/@miguel.albrecht/performance-of-javascript
 
 ## Executing the benchmark
 
-The easiest way to execute the benchmark is to copy the source onto a codepen running on the browser (engine) you want to test. Look at the console for the results. Repeat this on how many browsers you want to test.
+The easiest way to execute the benchmark is to paste the source onto a codepen running on the browser (engine) you want to test. Look at the console for the results. Repeat this on how many browsers you want to test.
 
 For Node, you need to have Node installed on your computer, then simply type
+
 ```
 $ node deduplicateArray.js
 ```
