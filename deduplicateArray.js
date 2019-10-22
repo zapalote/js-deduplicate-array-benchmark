@@ -78,5 +78,18 @@ useIterator = (arr) => {
 }
 testMethod(copyAndSort(ar), useIterator);
 
+useBetterReduce = (arr) => {
+ // arr is assumed to be sorted
+ return arr.reduce((x, y) => x[x.length - 1] === y ? x : [...x, y], arr.length ? [arr[0]] : []);
+}
+testMethod(copyAndSort(ar), useBetterReduce);
+
+useBetterReduce_backwards = (arr) => {
+ // arr is assumed to be sorted
+ // to remove time finding the last element, we're doing it backwards!
+ return arr.reduceRight((x, y) => x[0] === y ? x : [y, ...x], arr.length ? [arr[arr.length - 1]] : []);
+}
+testMethod(copyAndSort(ar), useBetterReduce_backwards);
+
 console.log("array length " + ar.length);
 times.forEach(t => console.log(`${t.name}: ${t.t} ms.`));
