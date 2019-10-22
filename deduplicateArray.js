@@ -56,5 +56,15 @@ useAssociative = (arr) => {
 }
 testMethod(ar, useAssociative);
 
+justCopy = (arr) => {
+ return arr.slice();
+}
+testMethod(ar, justCopy);
+
+copyAndSort = arr => {
+ return justCopy(arr).sort();
+}
+testMethod(ar, copyAndSort);
+
 console.log("array length " + ar.length);
 times.forEach(t => console.log(`${t.name}: ${t.t} ms.`));
