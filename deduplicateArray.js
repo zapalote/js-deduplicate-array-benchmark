@@ -15,7 +15,7 @@ testMethod = (array, method) => {
  let t = Date.now();
  let r = method(array);
  if(r.length != 5)
-   console.log("WRONG "+method.name+' '+r.slice(10));
+   console.log("WRONG "+method.name+' '+r.slice(0, 10));
  return { name: method.name, t: Date.now() - t };
 }
 
