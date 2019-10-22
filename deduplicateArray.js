@@ -80,6 +80,20 @@ useIterator = (arr) => {
 }
 testMethod(copyAndSort(ar), useIterator);
 
+useIteratorWisely = (arr) => {
+ // arr.sort();
+ let last = arr.length && arr[0];
+ let uniq = [last];
+ for (let i = 1; i < arr.length; i++) {
+   if (last !== arr[i]) {
+     last = arr[i];
+     uniq.push(last);
+   }
+ }
+ return uniq;
+}
+testMethod(copyAndSort(ar), useIteratorWisely);
+
 useBetterReduce = (arr) => {
  // arr is assumed to be sorted
  return arr.reduce((x, y) => x[x.length - 1] === y ? x : [...x, y], arr.length ? [arr[0]] : []);
