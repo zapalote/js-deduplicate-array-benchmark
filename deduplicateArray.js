@@ -66,5 +66,17 @@ copyAndSort = arr => {
 }
 testMethod(ar, copyAndSort);
 
+useIterator = (arr) => {
+ // arr is assumed to be sorted
+ let uniq = arr.length ? [arr[0]] : [];
+ for (let i = 1; i < arr.length; i++) {
+   if (arr[i-1] !== arr[i]) {
+     uniq.push(arr[i]);
+   }
+ }
+ return uniq;
+}
+testMethod(copyAndSort(ar), useIterator);
+
 console.log("array length " + ar.length);
 times.forEach(t => console.log(`${t.name}: ${t.t} ms.`));
