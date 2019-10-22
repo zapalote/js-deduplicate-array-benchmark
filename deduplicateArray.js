@@ -67,11 +67,13 @@ copyAndSort = arr => {
 testMethod(ar, copyAndSort);
 
 useIterator = (arr) => {
- // arr is assumed to be sorted
- let uniq = arr.length ? [arr[0]] : [];
+ // arr.sort();
+ let last = arr.length && arr[0];
+ let uniq = [last];
  for (let i = 1; i < arr.length; i++) {
-   if (arr[i-1] !== arr[i]) {
+   if (last !== arr[i]) {
      uniq.push(arr[i]);
+     last = arr[i];
    }
  }
  return uniq;
