@@ -11,12 +11,14 @@ for(let i=0; i<iter; i++){
  }
 }
 
+let times = [];
+
 testMethod = (array, method) => {
  let t = Date.now();
  let r = method(array);
  if(r.length != 5)
    console.log("WRONG "+method.name+' '+r.slice(0, 10));
- return { name: method.name, t: Date.now() - t };
+ times.push({ name: method.name, t: Date.now() - t });
 }
 
 useFilter = (arr) => {
@@ -24,17 +26,17 @@ useFilter = (arr) => {
    return array.indexOf(elem) == pos;
  });
 }
-let t1 = testMethod(ar, useFilter);
+testMethod(ar, useFilter);
 
 useSet = (arr) => {
  return [...new Set(arr)];
 }
-let t2 = testMethod(ar, useSet);
+testMethod(ar, useSet);
 
 useReduce = (arr) => {
  return arr.reduce((x, y) => x.includes(y) ? x : [...x, y], []);
 }
-let t3 = testMethod(ar, useReduce);
+testMethod(ar, useReduce);
 
 useForIncludes = (arr) => {
  let uniq = [];
@@ -43,7 +45,7 @@ useForIncludes = (arr) => {
  }
  return uniq;
 }
-let t0 = testMethod(ar, useForIncludes);
+testMethod(ar, useForIncludes);
 
 useAssociative = (arr) => {
  let uniq = [];
@@ -52,11 +54,7 @@ useAssociative = (arr) => {
  }
  return [...Object.keys(uniq)];
 }
-let t4 = testMethod(ar, useAssociative);
+testMethod(ar, useAssociative);
 
 console.log("array length " + ar.length);
-console.log(`${t1.name}: ${t1.t} ms.`);
-console.log(`${t2.name}: ${t2.t} ms.`);
-console.log(`${t3.name}: ${t3.t} ms.`);
-console.log(`${t0.name}: ${t0.t} ms.`);
-console.log(`${t4.name}: ${t4.t} ms.`);
+times.forEach(t => console.log(`${t.name}: ${t.t} ms.`));
