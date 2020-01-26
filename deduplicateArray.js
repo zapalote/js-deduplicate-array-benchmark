@@ -1,6 +1,50 @@
 // A quick benchmark of some solutions to deduplicate an array
 // see https://medium.com/@miguel.albrecht/performance-of-javascript-array-ops-2690aed47a50
-// by Miguel Albrecht (zapalote.com)
+// by Miguel Albrecht (zapalote.com
+//
+// Update: run also worst case scenario, large array with no duplicates at all.
+
+testMethod = (array, method, assertedLength) => {
+ let t = Date.now();
+ let r = method(array);
+ t = Date.now() - t;
+ if(r.length != assertedLength)
+   console.log("WRONG "+method.name+' '+r.slice(0,10));
+ else
+   console.log(`${method.name}: ${t} ms.`);
+}
+
+useFilter = (arr) => {
+ return arr.filter((elem, pos, array) => {
+   return array.indexOf(elem) == pos;
+ });
+}
+
+useSet = (arr) => {
+ return [...new Set(arr)];
+}
+
+useReduce = (arr) => {
+ return arr.reduce((x, y) => x.includes(y) ? x : [...x, y], []);
+}
+
+useForIncludes = (arr) => {
+ let uniq = [];
+ for (val of arr) {
+   if(!uniq.includes(val)) uniq.push(val);
+ }
+ return uniq;
+}
+
+useAssociative = (arr) => {
+ let uniq = [];
+ for (val of arr) {
+   uniq[val] = 0;
+ }
+ return [...Object.keys(uniq)];
+}
+
+// Scenario 1: lots of duplicates
 let iter = 1000000;
 let strings = ['Paris','New York','Paris','Berlin','Mumbai','San Diego','Berlin'];
 let ar = [];
@@ -11,52 +55,24 @@ for(let i=0; i<iter; i++){
  }
 }
 
-testMethod = (array, method) => {
- let t = Date.now();
- let r = method(array);
- if(r.length != 5)
-   console.log("WRONG "+method.name+' '+r.slice(10));
- return { name: method.name, t: Date.now() - t };
+console.log("S1 array length " + ar.length);
+testMethod(ar, useFilter, 5);
+testMethod(ar, useSet, 5);
+testMethod(ar, useReduce, 5);
+testMethod(ar, useForIncludes, 5);
+testMethod(ar, useAssociative, 5);
+
+// Scenario 2: hardly any or no duplicates at all
+iter = 50000;
+ar = [];
+
+for(let i=0; i<iter; i++){
+   ar.push(i);
 }
 
-useFilter = (arr) => {
- return arr.filter((elem, pos, array) => {
-   return array.indexOf(elem) == pos;
- });
-}
-let t1 = testMethod(ar, useFilter);
-
-useSet = (arr) => {
- return [...new Set(arr)];
-}
-let t2 = testMethod(ar, useSet);
-
-useReduce = (arr) => {
- return arr.reduce((x, y) => x.includes(y) ? x : [...x, y], []);
-}
-let t3 = testMethod(ar, useReduce);
-
-useForIncludes = (arr) => {
- let uniq = [];
- for (val of arr) {
-   if(!uniq.includes(val)) uniq.push(val);
- }
- return uniq;
-}
-let t0 = testMethod(ar, useForIncludes);
-
-useAssociative = (arr) => {
- let uniq = [];
- for (val of arr) {
-   uniq[val] = 0;
- }
- return [...Object.keys(uniq)];
-}
-let t4 = testMethod(ar, useAssociative);
-
-console.log("array length " + ar.length);
-console.log(`${t1.name}: ${t1.t} ms.`);
-console.log(`${t2.name}: ${t2.t} ms.`);
-console.log(`${t3.name}: ${t3.t} ms.`);
-console.log(`${t0.name}: ${t0.t} ms.`);
-console.log(`${t4.name}: ${t4.t} ms.`);
+console.log("S2 array length " + ar.length);
+testMethod(ar, useFilter, iter);
+testMethod(ar, useSet, iter);
+testMethod(ar, useReduce, iter);
+testMethod(ar, useForIncludes, iter);
+testMethod(ar, useAssociative, iter);
