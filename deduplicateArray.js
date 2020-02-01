@@ -50,9 +50,7 @@ let strings = ['Paris','New York','Paris','Berlin','Mumbai','San Diego','Berlin'
 let ar = [];
 
 for(let i=0; i<iter; i++){
- for(s of strings){
-   ar.push(s);
- }
+  ar.push(...strings);
 }
 
 console.log("S1 array length " + ar.length);
