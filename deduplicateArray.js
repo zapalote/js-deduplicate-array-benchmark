@@ -41,7 +41,7 @@ useAssociative = (arr) => {
   for (val of arr) {
     uniq[val] = 0;
   }
-  return [...Object.keys(uniq)];
+  return Object.keys(uniq);
 }
 
 // Scenario 1: lots of duplicates
